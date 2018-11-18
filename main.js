@@ -5321,6 +5321,7 @@ var elm$svg$Svg$rect = elm$svg$Svg$trustedNode('rect');
 var elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
 var elm$svg$Svg$text = elm$virtual_dom$VirtualDom$text;
 var elm$svg$Svg$text_ = elm$svg$Svg$trustedNode('text');
+var elm$svg$Svg$Attributes$dominantBaseline = _VirtualDom_attribute('dominant-baseline');
 var elm$svg$Svg$Attributes$fontSize = _VirtualDom_attribute('font-size');
 var elm$svg$Svg$Attributes$height = _VirtualDom_attribute('height');
 var elm$svg$Svg$Attributes$preserveAspectRatio = _VirtualDom_attribute('preserveAspectRatio');
@@ -5452,7 +5453,8 @@ var author$project$NSvg$elementToSvg = function (nSvgElement) {
 						elm$svg$Svg$Attributes$y(
 						elm$core$String$fromInt(y)),
 						elm$svg$Svg$Attributes$fontSize(
-						elm$core$String$fromInt(fontSize))
+						elm$core$String$fromInt(fontSize)),
+						elm$svg$Svg$Attributes$dominantBaseline('text-after-edge')
 					]),
 				_List_fromArray(
 					[
