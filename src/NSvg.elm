@@ -112,7 +112,7 @@ elementToSvg nSvgElement =
                 [ Sa.x (String.fromInt x)
                 , Sa.y (String.fromInt y)
                 , Sa.fontSize (String.fromInt fontSize)
-                , Sa.dominantBaseline "text-after-edge"
+                , Sa.dominantBaseline "text-before-edge"
                 ]
                 [ S.text value ]
 
