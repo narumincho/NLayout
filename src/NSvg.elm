@@ -10,6 +10,7 @@ module NSvg exposing
     , strokeColorWidth
     , strokeNone
     , toSvg
+    , text
     , translate
     )
 
@@ -36,6 +37,7 @@ type Element msg
     | RectRound { x : Int, y : Int, width : Int, height : Int, rx : Int, ry : Int, strokeStyle : StrokeStyle, fillStyle : FillStyle }
     | ImageContain { x : Int, y : Int, width : Int, height : Int, sourceUrl : String }
     | ImageCover { x : Int, y : Int, width : Int, height : Int, sourceUrl : String }
+    | Text { x : Int, y : Int, value : String, fontSize : Int }
 
 
 toSvg : { x : Int, y : Int, width : Int, height : Int } -> List (Element msg) -> Svg msg
@@ -104,6 +106,14 @@ elementToSvg nSvgElement =
                 , Sa.preserveAspectRatio "xMidYMid slice"
                 ]
                 []
+
+        Text { x, y, value, fontSize } ->
+            S.text_
+                [ Sa.x (String.fromInt x)
+                , Sa.y (String.fromInt y)
+                , Sa.fontSize (String.fromInt fontSize)
+                ]
+                [ S.text value ]
 
 
 {-|
@@ -225,6 +235,11 @@ imageCover { width, height, sourceUrl } =
         { x = 0, y = 0, width = width, height = height, sourceUrl = sourceUrl }
 
 
+text : { fontSize : Int } -> String -> Element msg
+text { fontSize } string =
+    Text { x = 0, y = 0, value = string, fontSize = fontSize }
+
+
 translate : { x : Int, y : Int } -> Element msg -> Element msg
 translate { x, y } nSvgElement =
     case nSvgElement of
@@ -251,6 +266,13 @@ translate { x, y } nSvgElement =
 
         ImageCover rec ->
             ImageCover
+                { rec
+                    | x = rec.x + x
+                    , y = rec.y + y
+                }
+
+        Text rec ->
+            Text
                 { rec
                     | x = rec.x + x
                     , y = rec.y + y

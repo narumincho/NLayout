@@ -92,6 +92,10 @@ view (Model { width, height }) =
                     , Panel.fitGrowFromFitFit Panel.bottom smallImage
                     ]
                 )
+            , Panel.growGrowFromFitFit
+                Panel.left
+                Panel.centerY
+                (PanelSample.text { width = 60, height = 130 } "Sample")
             ]
         )
 

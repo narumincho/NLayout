@@ -1,4 +1,29 @@
-module PanelSample exposing (HorizontalListItem(..), VerticalListItem(..), colorFixFix, colorFixGrow, colorGrowFix, colorGrowGrow, depthList, horizontalListFitFit, horizontalListFitGrow, horizontalListGrowFit, horizontalListGrowGrow, horizontalListMinWidth, horizontalListRest, horizontalListWeightSum, imageContain, imageCover, verticalListFitFit, verticalListFitGrow, verticalListGrowFit, verticalListGrowGrow, verticalListMinHeight, verticalListRest, verticalListWeightSum)
+module PanelSample exposing
+    ( HorizontalListItem(..)
+    , VerticalListItem(..)
+    , colorFixFix
+    , colorFixGrow
+    , colorGrowFix
+    , colorGrowGrow
+    , depthList
+    , horizontalListFitFit
+    , horizontalListFitGrow
+    , horizontalListGrowFit
+    , horizontalListGrowGrow
+    , horizontalListMinWidth
+    , horizontalListRest
+    , horizontalListWeightSum
+    , imageContain
+    , imageCover
+    , text
+    , verticalListFitFit
+    , verticalListFitGrow
+    , verticalListGrowFit
+    , verticalListGrowGrow
+    , verticalListMinHeight
+    , verticalListRest
+    , verticalListWeightSum
+    )
 
 import Color exposing (Color)
 import NSvg exposing (Svg)
@@ -126,6 +151,25 @@ imageCover { width, height } source =
         , nSvgElementList =
             [ NSvg.imageCover
                 { width = width, height = height, sourceUrl = source }
+            ]
+        }
+
+
+
+{-
+   =========================================
+                   テキスト
+   =========================================
+-}
+
+
+text : { width : Int, height : Int } -> String -> Panel.FitFit msg
+text { width, height } string =
+    Panel.fitFitCustomize
+        { width = width
+        , height = height
+        , nSvgElementList =
+            [ NSvg.text { fontSize = 12 } string
             ]
         }
 
