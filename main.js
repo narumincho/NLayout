@@ -2643,7 +2643,7 @@ var _VirtualDom_mapEventTuple = F2(function(func, tuple)
 var _VirtualDom_mapEventRecord = F2(function(func, record)
 {
 	return {
-		n: func(record.n),
+		o: func(record.o),
 		W: record.W,
 		S: record.S
 	}
@@ -2913,7 +2913,7 @@ function _VirtualDom_makeCallback(eventNode, initialHandler)
 		// 3 = Custom
 
 		var value = result.a;
-		var message = !tag ? value : tag < 3 ? value.a : value.n;
+		var message = !tag ? value : tag < 3 ? value.a : value.o;
 		var stopPropagation = tag == 1 ? value.b : tag == 3 && value.W;
 		var currentEventNode = (
 			stopPropagation && event.stopPropagation(),
@@ -4175,8 +4175,8 @@ function _Browser_getViewport()
 		at: {
 			a: _Browser_window.pageXOffset,
 			b: _Browser_window.pageYOffset,
-			q: _Browser_doc.documentElement.clientWidth,
-			i: _Browser_doc.documentElement.clientHeight
+			m: _Browser_doc.documentElement.clientWidth,
+			j: _Browser_doc.documentElement.clientHeight
 		}
 	};
 }
@@ -4186,8 +4186,8 @@ function _Browser_getScene()
 	var body = _Browser_doc.body;
 	var elem = _Browser_doc.documentElement;
 	return {
-		q: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
-		i: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
+		m: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
+		j: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
 	};
 }
 
@@ -4211,14 +4211,14 @@ function _Browser_getViewportOf(id)
 	{
 		return {
 			ap: {
-				q: node.scrollWidth,
-				i: node.scrollHeight
+				m: node.scrollWidth,
+				j: node.scrollHeight
 			},
 			at: {
 				a: node.scrollLeft,
 				b: node.scrollTop,
-				q: node.clientWidth,
-				i: node.clientHeight
+				m: node.clientWidth,
+				j: node.clientHeight
 			}
 		};
 	});
@@ -4252,14 +4252,14 @@ function _Browser_getElement(id)
 			at: {
 				a: x,
 				b: y,
-				q: _Browser_doc.documentElement.clientWidth,
-				i: _Browser_doc.documentElement.clientHeight
+				m: _Browser_doc.documentElement.clientWidth,
+				j: _Browser_doc.documentElement.clientHeight
 			},
 			ay: {
 				a: x + rect.left,
 				b: y + rect.top,
-				q: rect.width,
-				i: rect.height
+				m: rect.width,
+				j: rect.height
 			}
 		};
 	});
@@ -4777,7 +4777,7 @@ var elm$core$Platform$Cmd$batch = _Platform_batch;
 var elm$core$Platform$Cmd$none = elm$core$Platform$Cmd$batch(_List_Nil);
 var author$project$Main$init = function (_n0) {
 	return _Utils_Tuple2(
-		{i: 0, q: 0},
+		{j: 0, m: 0},
 		elm$core$Platform$Cmd$none);
 };
 var author$project$Main$Msg = elm$core$Basics$identity;
@@ -4794,7 +4794,7 @@ var author$project$Main$nextFrame = _Platform_incomingPort(
 				elm$json$Json$Decode$andThen,
 				function (height) {
 					return elm$json$Json$Decode$succeed(
-						{i: height, q: width});
+						{j: height, m: width});
 				},
 				A2(elm$json$Json$Decode$field, 'height', elm$json$Json$Decode$int));
 		},
@@ -4807,50 +4807,13 @@ var author$project$Main$update = F2(
 		var rec = msg;
 		return _Utils_Tuple2(rec, elm$core$Platform$Cmd$none);
 	});
-var author$project$Main$imgSource = 'image/img.jpg';
-var author$project$NSvg$ImageCover = function (a) {
-	return {$: 3, a: a};
-};
-var author$project$NSvg$imageCover = function (_n0) {
-	var width = _n0.q;
-	var height = _n0.i;
-	var sourceUrl = _n0.C;
-	return author$project$NSvg$ImageCover(
-		{i: height, C: sourceUrl, q: width, a: 0, b: 0});
-};
-var author$project$Panel$FitFit = elm$core$Basics$identity;
-var author$project$Panel$fitFitCustomize = elm$core$Basics$identity;
-var author$project$PanelSample$imageCover = F2(
-	function (_n0, source) {
-		var width = _n0.q;
-		var height = _n0.i;
-		return author$project$Panel$fitFitCustomize(
-			{
-				i: height,
-				l: _List_fromArray(
-					[
-						author$project$NSvg$imageCover(
-						{i: height, C: source, q: width})
-					]),
-				q: width
-			});
-	});
-var author$project$Main$bigImage = A2(
-	author$project$PanelSample$imageCover,
-	{i: 72, q: 96},
-	author$project$Main$imgSource);
-var author$project$Main$smallImage = A2(
-	author$project$PanelSample$imageCover,
-	{i: 24, q: 32},
-	author$project$Main$imgSource);
-var author$project$Panel$Bottom = 2;
-var author$project$Panel$bottom = 2;
-var author$project$Panel$CenterX = 1;
-var author$project$Panel$centerX = 1;
 var author$project$Panel$CenterY = 1;
 var author$project$Panel$centerY = 1;
 var author$project$NSvg$ImageContain = function (a) {
 	return {$: 2, a: a};
+};
+var author$project$NSvg$ImageCover = function (a) {
+	return {$: 3, a: a};
 };
 var author$project$NSvg$Rect = function (a) {
 	return {$: 0, a: a};
@@ -4898,23 +4861,23 @@ var author$project$NSvg$translate = F2(
 						{a: rec.a + x, b: rec.b + y}));
 		}
 	});
-var author$project$Panel$FitGrow = elm$core$Basics$identity;
-var author$project$Panel$fitFitGetHeight = function (_n0) {
-	var height = _n0.i;
+var author$project$Panel$FixGrow = elm$core$Basics$identity;
+var author$project$Panel$fixFixGetHeight = function (_n0) {
+	var height = _n0.j;
 	return height;
 };
-var author$project$Panel$fitFitGetWidth = function (_n0) {
-	var width = _n0.q;
+var author$project$Panel$fixFixGetWidth = function (_n0) {
+	var width = _n0.m;
 	return width;
 };
-var author$project$Panel$fitFitToNSvgElementList = function (_n0) {
+var author$project$Panel$fixFixToNSvgElementList = function (_n0) {
 	var nSvgElementList = _n0.l;
 	return nSvgElementList;
 };
 var author$project$Panel$verticalAlignmentToY = F2(
 	function (_n0, verticalAlignment) {
 		var areaHeight = _n0.L;
-		var height = _n0.i;
+		var height = _n0.j;
 		switch (verticalAlignment) {
 			case 0:
 				return 0;
@@ -4993,12 +4956,12 @@ var elm$core$List$map = F2(
 			_List_Nil,
 			xs);
 	});
-var author$project$Panel$fitGrowFromFitFit = F2(
-	function (verticalAlignment, fitFit) {
+var author$project$Panel$fixGrowFromFixFix = F2(
+	function (verticalAlignment, fixFix) {
 		return {
-			x: author$project$Panel$fitFitGetHeight(fitFit),
+			x: author$project$Panel$fixFixGetHeight(fixFix),
 			l: function (_n0) {
-				var height = _n0.i;
+				var height = _n0.j;
 				return A2(
 					elm$core$List$map,
 					author$project$NSvg$translate(
@@ -5008,20 +4971,20 @@ var author$project$Panel$fitGrowFromFitFit = F2(
 								author$project$Panel$verticalAlignmentToY,
 								{
 									L: height,
-									i: author$project$Panel$fitFitGetHeight(fitFit)
+									j: author$project$Panel$fixFixGetHeight(fixFix)
 								},
 								verticalAlignment)
 						}),
-					author$project$Panel$fitFitToNSvgElementList(fitFit));
+					author$project$Panel$fixFixToNSvgElementList(fixFix));
 			},
-			q: author$project$Panel$fitFitGetWidth(fitFit)
+			m: author$project$Panel$fixFixGetWidth(fixFix)
 		};
 	});
-var author$project$Panel$GrowFit = elm$core$Basics$identity;
+var author$project$Panel$GrowGrow = elm$core$Basics$identity;
 var author$project$Panel$horizontalAlignmentToX = F2(
 	function (_n0, horizontalAlignment) {
 		var areaWidth = _n0.M;
-		var width = _n0.q;
+		var width = _n0.m;
 		switch (horizontalAlignment) {
 			case 0:
 				return 0;
@@ -5031,13 +4994,14 @@ var author$project$Panel$horizontalAlignmentToX = F2(
 				return areaWidth - width;
 		}
 	});
-var author$project$Panel$growFitFromFitFit = F2(
-	function (horizontalAlignment, fitFit) {
+var author$project$Panel$growGrowFromFixFix = F3(
+	function (horizontalAlignment, verticalAlignment, fixFix) {
 		return {
-			i: author$project$Panel$fitFitGetHeight(fitFit),
-			y: author$project$Panel$fitFitGetWidth(fitFit),
+			x: author$project$Panel$fixFixGetHeight(fixFix),
+			y: author$project$Panel$fixFixGetWidth(fixFix),
 			l: function (_n0) {
-				var width = _n0.q;
+				var width = _n0.m;
+				var height = _n0.j;
 				return A2(
 					elm$core$List$map,
 					author$project$NSvg$translate(
@@ -5046,131 +5010,23 @@ var author$project$Panel$growFitFromFitFit = F2(
 								author$project$Panel$horizontalAlignmentToX,
 								{
 									M: width,
-									q: author$project$Panel$fitFitGetWidth(fitFit)
-								},
-								horizontalAlignment),
-							b: 0
-						}),
-					author$project$Panel$fitFitToNSvgElementList(fitFit));
-			}
-		};
-	});
-var author$project$Panel$GrowGrow = elm$core$Basics$identity;
-var author$project$Panel$growGrowFromFitFit = F3(
-	function (horizontalAlignment, verticalAlignment, fitFit) {
-		return {
-			x: author$project$Panel$fitFitGetHeight(fitFit),
-			y: author$project$Panel$fitFitGetWidth(fitFit),
-			l: function (_n0) {
-				var width = _n0.q;
-				var height = _n0.i;
-				return A2(
-					elm$core$List$map,
-					author$project$NSvg$translate(
-						{
-							a: A2(
-								author$project$Panel$horizontalAlignmentToX,
-								{
-									M: width,
-									q: author$project$Panel$fitFitGetWidth(fitFit)
+									m: author$project$Panel$fixFixGetWidth(fixFix)
 								},
 								horizontalAlignment),
 							b: A2(
 								author$project$Panel$verticalAlignmentToY,
 								{
 									L: height,
-									i: author$project$Panel$fitFitGetHeight(fitFit)
+									j: author$project$Panel$fixFixGetHeight(fixFix)
 								},
 								verticalAlignment)
 						}),
-					author$project$Panel$fitFitToNSvgElementList(fitFit));
-			}
-		};
-	});
-var author$project$Panel$fitGrowGetMinHeight = function (_n0) {
-	var minHeight = _n0.x;
-	return minHeight;
-};
-var author$project$Panel$fitGrowGetWidth = function (_n0) {
-	var width = _n0.q;
-	return width;
-};
-var author$project$Panel$fitGrowToNSvgElementList = function (_n0) {
-	var nSvgElementList = _n0.l;
-	return nSvgElementList;
-};
-var author$project$Panel$growGrowFromFitGrow = F2(
-	function (horizontalAlignment, fitGrow) {
-		return {
-			x: author$project$Panel$fitGrowGetMinHeight(fitGrow),
-			y: author$project$Panel$fitGrowGetWidth(fitGrow),
-			l: function (_n0) {
-				var width = _n0.q;
-				var height = _n0.i;
-				return A2(
-					elm$core$List$map,
-					author$project$NSvg$translate(
-						{
-							a: A2(
-								author$project$Panel$horizontalAlignmentToX,
-								{
-									M: width,
-									q: author$project$Panel$fitGrowGetWidth(fitGrow)
-								},
-								horizontalAlignment),
-							b: 0
-						}),
-					A2(
-						author$project$Panel$fitGrowToNSvgElementList,
-						fitGrow,
-						{i: height}));
-			}
-		};
-	});
-var author$project$Panel$growFitGetHeight = function (_n0) {
-	var height = _n0.i;
-	return height;
-};
-var author$project$Panel$growFitGetMinWidth = function (_n0) {
-	var minWidth = _n0.y;
-	return minWidth;
-};
-var author$project$Panel$growFitToNSvgElementList = function (_n0) {
-	var nSvgElementList = _n0.l;
-	return nSvgElementList;
-};
-var author$project$Panel$growGrowFromGrowFit = F2(
-	function (verticalAlignment, growFit) {
-		return {
-			x: author$project$Panel$growFitGetHeight(growFit),
-			y: author$project$Panel$growFitGetMinWidth(growFit),
-			l: function (_n0) {
-				var width = _n0.q;
-				var height = _n0.i;
-				return A2(
-					elm$core$List$map,
-					author$project$NSvg$translate(
-						{
-							a: A2(
-								author$project$Panel$verticalAlignmentToY,
-								{
-									L: height,
-									i: author$project$Panel$growFitGetMinWidth(growFit)
-								},
-								verticalAlignment),
-							b: 0
-						}),
-					A2(
-						author$project$Panel$growFitToNSvgElementList,
-						growFit,
-						{q: width}));
+					author$project$Panel$fixFixToNSvgElementList(fixFix));
 			}
 		};
 	});
 var author$project$Panel$Left = 0;
 var author$project$Panel$left = 0;
-var author$project$Panel$Right = 2;
-var author$project$Panel$right = 2;
 var elm$json$Json$Decode$map = _Json_map1;
 var elm$json$Json$Decode$map2 = _Json_map2;
 var elm$virtual_dom$VirtualDom$toHandlerInt = function (handler) {
@@ -5305,7 +5161,7 @@ var author$project$NSvg$strokeStyleToSvgAttributes = function (strokeStyle) {
 				]);
 		default:
 			var color = strokeStyle.a.v;
-			var width = strokeStyle.a.q;
+			var width = strokeStyle.a.m;
 			return _List_fromArray(
 				[
 					elm$svg$Svg$Attributes$stroke(
@@ -5342,8 +5198,8 @@ var author$project$NSvg$elementToSvg = function (nSvgElement) {
 		case 0:
 			var x = nSvgElement.a.a;
 			var y = nSvgElement.a.b;
-			var width = nSvgElement.a.q;
-			var height = nSvgElement.a.i;
+			var width = nSvgElement.a.m;
+			var height = nSvgElement.a.j;
 			var strokeStyle = nSvgElement.a.O;
 			var fillStyle = nSvgElement.a.N;
 			return A2(
@@ -5367,8 +5223,8 @@ var author$project$NSvg$elementToSvg = function (nSvgElement) {
 		case 1:
 			var x = nSvgElement.a.a;
 			var y = nSvgElement.a.b;
-			var width = nSvgElement.a.q;
-			var height = nSvgElement.a.i;
+			var width = nSvgElement.a.m;
+			var height = nSvgElement.a.j;
 			var rx = nSvgElement.a.T;
 			var ry = nSvgElement.a.U;
 			var strokeStyle = nSvgElement.a.O;
@@ -5398,8 +5254,8 @@ var author$project$NSvg$elementToSvg = function (nSvgElement) {
 		case 2:
 			var x = nSvgElement.a.a;
 			var y = nSvgElement.a.b;
-			var width = nSvgElement.a.q;
-			var height = nSvgElement.a.i;
+			var width = nSvgElement.a.m;
+			var height = nSvgElement.a.j;
 			var sourceUrl = nSvgElement.a.C;
 			return A2(
 				elm$svg$Svg$image,
@@ -5420,8 +5276,8 @@ var author$project$NSvg$elementToSvg = function (nSvgElement) {
 		case 3:
 			var x = nSvgElement.a.a;
 			var y = nSvgElement.a.b;
-			var width = nSvgElement.a.q;
-			var height = nSvgElement.a.i;
+			var width = nSvgElement.a.m;
+			var height = nSvgElement.a.j;
 			var sourceUrl = nSvgElement.a.C;
 			return A2(
 				elm$svg$Svg$image,
@@ -5454,7 +5310,7 @@ var author$project$NSvg$elementToSvg = function (nSvgElement) {
 						elm$core$String$fromInt(y)),
 						elm$svg$Svg$Attributes$fontSize(
 						elm$core$String$fromInt(fontSize)),
-						elm$svg$Svg$Attributes$dominantBaseline('text-after-edge')
+						elm$svg$Svg$Attributes$dominantBaseline('text-before-edge')
 					]),
 				_List_fromArray(
 					[
@@ -5468,8 +5324,8 @@ var author$project$NSvg$toSvg = F2(
 	function (_n0, children) {
 		var x = _n0.a;
 		var y = _n0.b;
-		var width = _n0.q;
-		var height = _n0.i;
+		var width = _n0.m;
+		var height = _n0.j;
 		return A2(
 			elm$svg$Svg$svg,
 			_List_fromArray(
@@ -5485,100 +5341,19 @@ var author$project$Panel$growGrowToNSvgElementList = function (_n0) {
 };
 var author$project$Panel$toSvg = F2(
 	function (_n0, element) {
-		var width = _n0.q;
-		var height = _n0.i;
+		var width = _n0.m;
+		var height = _n0.j;
 		return A2(
 			author$project$NSvg$toSvg,
-			{i: height, q: width, a: 0, b: 0},
+			{j: height, m: width, a: 0, b: 0},
 			A2(
 				author$project$Panel$growGrowToNSvgElementList,
 				element,
-				{i: height, q: width}));
+				{j: height, m: width}));
 	});
 var author$project$Panel$Top = 0;
 var author$project$Panel$top = 0;
-var author$project$PanelSample$VerticalDivideItemFit = function (a) {
-	return {$: 0, a: a};
-};
-var author$project$PanelSample$VerticalDivideItemGrow = F2(
-	function (a, b) {
-		return {$: 1, a: a, b: b};
-	});
-var author$project$NSvg$FillWithColor = function (a) {
-	return {$: 1, a: a};
-};
-var author$project$NSvg$fillColor = function (color) {
-	return author$project$NSvg$FillWithColor(
-		{v: color});
-};
-var author$project$NSvg$rect = F3(
-	function (_n0, strokeStyle, fillStyle) {
-		var width = _n0.q;
-		var height = _n0.i;
-		return author$project$NSvg$Rect(
-			{N: fillStyle, i: height, O: strokeStyle, q: width, a: 0, b: 0});
-	});
-var author$project$NSvg$StrokeNone = {$: 0};
-var author$project$NSvg$strokeNone = author$project$NSvg$StrokeNone;
-var author$project$PanelSample$colorFixFix = F2(
-	function (_n0, color) {
-		var width = _n0.q;
-		var height = _n0.i;
-		return author$project$Panel$fitFitCustomize(
-			{
-				i: height,
-				l: _List_fromArray(
-					[
-						A3(
-						author$project$NSvg$rect,
-						{i: height, q: width},
-						author$project$NSvg$strokeNone,
-						author$project$NSvg$fillColor(color))
-					]),
-				q: width
-			});
-	});
-var author$project$Panel$growFitCustomize = elm$core$Basics$identity;
-var author$project$PanelSample$colorGrowFix = F2(
-	function (_n0, color) {
-		var height = _n0.i;
-		return author$project$Panel$growFitCustomize(
-			{
-				i: height,
-				y: 0,
-				l: function (_n1) {
-					var width = _n1.q;
-					return _List_fromArray(
-						[
-							A3(
-							author$project$NSvg$rect,
-							{i: height, q: width},
-							author$project$NSvg$strokeNone,
-							author$project$NSvg$fillColor(color))
-						]);
-				}
-			});
-	});
 var author$project$Panel$growGrowCustomize = elm$core$Basics$identity;
-var author$project$PanelSample$colorGrowGrow = function (color) {
-	return author$project$Panel$growGrowCustomize(
-		{
-			x: 0,
-			y: 0,
-			l: function (_n0) {
-				var width = _n0.q;
-				var height = _n0.i;
-				return _List_fromArray(
-					[
-						A3(
-						author$project$NSvg$rect,
-						{i: height, q: width},
-						author$project$NSvg$strokeNone,
-						author$project$NSvg$fillColor(color))
-					]);
-			}
-		});
-};
 var author$project$Panel$growGrowGetMinHeight = function (_n0) {
 	var minHeight = _n0.x;
 	return minHeight;
@@ -5645,7 +5420,20 @@ var author$project$PanelSample$depthList = function (list) {
 			}
 		});
 };
-var author$project$Panel$fitGrowCustomize = elm$core$Basics$identity;
+var author$project$Panel$FixFix = elm$core$Basics$identity;
+var author$project$Panel$fixFixCustomize = elm$core$Basics$identity;
+var author$project$Panel$fixGrowGetMinHeight = function (_n0) {
+	var minHeight = _n0.x;
+	return minHeight;
+};
+var author$project$Panel$fixGrowGetWidth = function (_n0) {
+	var width = _n0.m;
+	return width;
+};
+var author$project$Panel$fixGrowToNSvgElementList = function (_n0) {
+	var nSvgElementList = _n0.l;
+	return nSvgElementList;
+};
 var elm$core$List$sum = function (numbers) {
 	return A3(elm$core$List$foldl, elm$core$Basics$add, 0, numbers);
 };
@@ -5653,38 +5441,38 @@ var elm$core$Tuple$second = function (_n0) {
 	var y = _n0.b;
 	return y;
 };
-var author$project$PanelSample$horizontalListFitGrow = function (list) {
-	return author$project$Panel$fitGrowCustomize(
+var author$project$PanelSample$horizontalListFixFix = function (list) {
+	var height = A2(
+		elm$core$Maybe$withDefault,
+		0,
+		elm$core$List$maximum(
+			A2(elm$core$List$map, author$project$Panel$fixGrowGetMinHeight, list)));
+	return author$project$Panel$fixFixCustomize(
 		{
-			x: A2(
-				elm$core$Maybe$withDefault,
-				0,
-				elm$core$List$maximum(
-					A2(elm$core$List$map, author$project$Panel$fitGrowGetMinHeight, list))),
-			l: function (_n0) {
-				var height = _n0.i;
-				return A3(
-					elm$core$List$foldl,
-					F2(
-						function (fitGrowPanel, _n1) {
-							var offsetX = _n1.a;
-							var elementList = _n1.b;
-							return _Utils_Tuple2(
-								offsetX + author$project$Panel$fitGrowGetWidth(fitGrowPanel),
+			j: height,
+			l: A3(
+				elm$core$List$foldl,
+				F2(
+					function (fixGrowPanel, _n0) {
+						var offsetX = _n0.a;
+						var elementList = _n0.b;
+						return _Utils_Tuple2(
+							offsetX + author$project$Panel$fixGrowGetWidth(fixGrowPanel),
+							_Utils_ap(
+								elementList,
 								A2(
 									elm$core$List$map,
 									author$project$NSvg$translate(
 										{a: offsetX, b: 0}),
 									A2(
-										author$project$Panel$fitGrowToNSvgElementList,
-										fitGrowPanel,
-										{i: height})));
-						}),
-					_Utils_Tuple2(0, _List_Nil),
-					list).b;
-			},
-			q: elm$core$List$sum(
-				A2(elm$core$List$map, author$project$Panel$fitGrowGetWidth, list))
+										author$project$Panel$fixGrowToNSvgElementList,
+										fixGrowPanel,
+										{j: height}))));
+					}),
+				_Utils_Tuple2(0, _List_Nil),
+				list).b,
+			m: elm$core$List$sum(
+				A2(elm$core$List$map, author$project$Panel$fixGrowGetWidth, list))
 		});
 };
 var author$project$NSvg$text = F2(
@@ -5695,11 +5483,11 @@ var author$project$NSvg$text = F2(
 	});
 var author$project$PanelSample$text = F2(
 	function (_n0, string) {
-		var width = _n0.q;
-		var height = _n0.i;
-		return author$project$Panel$fitFitCustomize(
+		var width = _n0.m;
+		var height = _n0.j;
+		return author$project$Panel$fixFixCustomize(
 			{
-				i: height,
+				j: height,
 				l: _List_fromArray(
 					[
 						A2(
@@ -5707,215 +5495,47 @@ var author$project$PanelSample$text = F2(
 						{P: 12},
 						string)
 					]),
-				q: width
+				m: width
 			});
 	});
-var elm$core$Basics$composeR = F3(
-	function (f, g, x) {
-		return g(
-			f(x));
-	});
-var author$project$PanelSample$verticalListMinHeight = A2(
-	elm$core$Basics$composeR,
-	elm$core$List$map(
-		function (item) {
-			if (!item.$) {
-				var growFitPanel = item.a;
-				return author$project$Panel$growFitGetHeight(growFitPanel);
-			} else {
-				var growGrowPanel = item.b;
-				return author$project$Panel$growGrowGetMinHeight(growGrowPanel);
-			}
-		}),
-	elm$core$List$sum);
-var author$project$PanelSample$verticalListMinWidth = A2(
-	elm$core$Basics$composeR,
-	elm$core$List$map(
-		function (item) {
-			if (!item.$) {
-				var growFitPanel = item.a;
-				return author$project$Panel$growFitGetMinWidth(growFitPanel);
-			} else {
-				var growGrowPanel = item.b;
-				return author$project$Panel$growGrowGetMinWidth(growGrowPanel);
-			}
-		}),
-	A2(
-		elm$core$Basics$composeR,
-		elm$core$List$maximum,
-		elm$core$Maybe$withDefault(0)));
-var elm$core$List$maybeCons = F3(
-	function (f, mx, xs) {
-		var _n0 = f(mx);
-		if (!_n0.$) {
-			var x = _n0.a;
-			return A2(elm$core$List$cons, x, xs);
-		} else {
-			return xs;
-		}
-	});
-var elm$core$List$filterMap = F2(
-	function (f, xs) {
-		return A3(
-			elm$core$List$foldr,
-			elm$core$List$maybeCons(f),
-			_List_Nil,
-			xs);
-	});
-var author$project$PanelSample$verticalListRest = F2(
-	function (height, list) {
-		return height - elm$core$List$sum(
-			A2(
-				elm$core$List$filterMap,
-				function (item) {
-					if (!item.$) {
-						var growFitPanel = item.a;
-						return elm$core$Maybe$Just(
-							author$project$Panel$growFitGetHeight(growFitPanel));
-					} else {
-						return elm$core$Maybe$Nothing;
-					}
-				},
-				list));
-	});
-var author$project$PanelSample$verticalListWeightSum = A2(
-	elm$core$Basics$composeR,
-	elm$core$List$filterMap(
-		function (item) {
-			if (!item.$) {
-				return elm$core$Maybe$Nothing;
-			} else {
-				var weight = item.a;
-				return elm$core$Maybe$Just(weight);
-			}
-		}),
-	A2(
-		elm$core$Basics$composeR,
-		elm$core$List$maximum,
-		elm$core$Maybe$withDefault(0)));
-var author$project$PanelSample$verticalListGrowGrow = function (list) {
-	return author$project$Panel$growGrowCustomize(
-		{
-			x: author$project$PanelSample$verticalListMinHeight(list),
-			y: author$project$PanelSample$verticalListMinWidth(list),
-			l: function (_n0) {
-				var width = _n0.q;
-				var height = _n0.i;
-				var weightSum = author$project$PanelSample$verticalListWeightSum(list);
-				var rest = A2(author$project$PanelSample$verticalListRest, height, list);
-				return A3(
-					elm$core$List$foldl,
-					F2(
-						function (item, _n1) {
-							var offsetY = _n1.a;
-							var elementList = _n1.b;
-							if (!item.$) {
-								var growFitPanel = item.a;
-								return _Utils_Tuple2(
-									offsetY + author$project$Panel$growFitGetHeight(growFitPanel),
-									_Utils_ap(
-										elementList,
-										A2(
-											elm$core$List$map,
-											author$project$NSvg$translate(
-												{a: 0, b: offsetY}),
-											A2(
-												author$project$Panel$growFitToNSvgElementList,
-												growFitPanel,
-												{q: width}))));
-							} else {
-								var weight = item.a;
-								var growGrowPanel = item.b;
-								return _Utils_Tuple2(
-									offsetY + (((rest * weight) / weightSum) | 0),
-									_Utils_ap(
-										elementList,
-										A2(
-											elm$core$List$map,
-											author$project$NSvg$translate(
-												{a: 0, b: offsetY}),
-											A2(
-												author$project$Panel$growGrowToNSvgElementList,
-												growGrowPanel,
-												{i: ((rest * weight) / weightSum) | 0, q: width}))));
-							}
-						}),
-					_Utils_Tuple2(0, _List_Nil),
-					list).b;
-			}
-		});
-};
-var tesk9$palette$Palette$X11$brown = tesk9$palette$Color$fromRGB(
-	_Utils_Tuple3(165, 42, 42));
-var tesk9$palette$Palette$X11$darkBlue = tesk9$palette$Color$fromRGB(
-	_Utils_Tuple3(0, 0, 139));
-var tesk9$palette$Palette$X11$green = tesk9$palette$Color$fromRGB(
-	_Utils_Tuple3(0, 128, 0));
-var tesk9$palette$Palette$X11$skyBlue = tesk9$palette$Color$fromRGB(
-	_Utils_Tuple3(135, 206, 235));
 var author$project$Main$view = function (_n0) {
-	var width = _n0.q;
-	var height = _n0.i;
+	var width = _n0.m;
+	var height = _n0.j;
 	return A2(
 		author$project$Panel$toSvg,
-		{i: height, q: width},
+		{j: height, m: width},
 		author$project$PanelSample$depthList(
 			_List_fromArray(
 				[
-					author$project$PanelSample$colorGrowGrow(tesk9$palette$Palette$X11$brown),
 					A3(
-					author$project$Panel$growGrowFromFitFit,
+					author$project$Panel$growGrowFromFixFix,
 					author$project$Panel$left,
-					author$project$Panel$bottom,
-					A2(
-						author$project$PanelSample$colorFixFix,
-						{i: 130, q: 60},
-						tesk9$palette$Palette$X11$skyBlue)),
-					A2(
-					author$project$Panel$growGrowFromGrowFit,
 					author$project$Panel$top,
-					A2(
-						author$project$PanelSample$colorGrowFix,
-						{i: 20},
-						tesk9$palette$Palette$X11$skyBlue)),
-					author$project$PanelSample$verticalListGrowGrow(
-					_List_fromArray(
-						[
-							author$project$PanelSample$VerticalDivideItemFit(
-							A2(author$project$Panel$growFitFromFitFit, author$project$Panel$left, author$project$Main$smallImage)),
-							author$project$PanelSample$VerticalDivideItemFit(
-							A2(author$project$Panel$growFitFromFitFit, author$project$Panel$centerX, author$project$Main$smallImage)),
-							author$project$PanelSample$VerticalDivideItemFit(
-							A2(author$project$Panel$growFitFromFitFit, author$project$Panel$right, author$project$Main$smallImage)),
-							author$project$PanelSample$VerticalDivideItemFit(
-							A2(
-								author$project$PanelSample$colorGrowFix,
-								{i: 10},
-								tesk9$palette$Palette$X11$darkBlue)),
-							A2(
-							author$project$PanelSample$VerticalDivideItemGrow,
-							1,
-							author$project$PanelSample$colorGrowGrow(tesk9$palette$Palette$X11$green)),
-							author$project$PanelSample$VerticalDivideItemFit(
-							A2(author$project$Panel$growFitFromFitFit, author$project$Panel$centerX, author$project$Main$bigImage))
-						])),
-					A2(
-					author$project$Panel$growGrowFromFitGrow,
-					author$project$Panel$left,
-					author$project$PanelSample$horizontalListFitGrow(
+					author$project$PanelSample$horizontalListFixFix(
 						_List_fromArray(
 							[
-								A2(author$project$Panel$fitGrowFromFitFit, author$project$Panel$top, author$project$Main$bigImage),
-								A2(author$project$Panel$fitGrowFromFitFit, author$project$Panel$bottom, author$project$Main$smallImage)
-							]))),
-					A3(
-					author$project$Panel$growGrowFromFitFit,
-					author$project$Panel$left,
-					author$project$Panel$centerY,
-					A2(
-						author$project$PanelSample$text,
-						{i: 130, q: 60},
-						'Sample'))
+								A2(
+								author$project$Panel$fixGrowFromFixFix,
+								author$project$Panel$centerY,
+								A2(
+									author$project$PanelSample$text,
+									{j: 12, m: 32},
+									'12345')),
+								A2(
+								author$project$Panel$fixGrowFromFixFix,
+								author$project$Panel$centerY,
+								A2(
+									author$project$PanelSample$text,
+									{j: 12, m: 32},
+									'+')),
+								A2(
+								author$project$Panel$fixGrowFromFixFix,
+								author$project$Panel$centerY,
+								A2(
+									author$project$PanelSample$text,
+									{j: 12, m: 32},
+									'abc'))
+							])))
 				])));
 };
 var elm$browser$Browser$External = function (a) {

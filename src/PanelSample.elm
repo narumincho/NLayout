@@ -1,34 +1,75 @@
 module PanelSample exposing
-    ( HorizontalListItem(..)
-    , VerticalListItem(..)
-    , colorFixFix
-    , colorFixGrow
-    , colorGrowFix
-    , colorGrowGrow
-    , depthList
-    , horizontalListFitFit
-    , horizontalListFitGrow
-    , horizontalListGrowFit
-    , horizontalListGrowGrow
-    , horizontalListMinWidth
-    , horizontalListRest
-    , horizontalListWeightSum
-    , imageContain
-    , imageCover
+    ( colorGrowGrow, colorGrowFix, colorFixGrow, colorFixFix
+    , imageContain, imageCover
     , text
-    , verticalListFitFit
-    , verticalListFitGrow
-    , verticalListGrowFit
-    , verticalListGrowGrow
-    , verticalListMinHeight
-    , verticalListRest
-    , verticalListWeightSum
+    , boxFixFix
+    , depthList
+    , VerticalListItem(..), verticalListGrowGrow, verticalListGrowFix, verticalListFixGrow, verticalListFixFix
+    , HorizontalListItem(..), horizontalListGrowGrow, horizontalListGrowFix, horizontalListFixGrow, horizontalListFixFix
     )
+
+{-| よく使うPanelのサンプルを多数収録!
+
+# 単色パネル
+
+@docs colorGrowGrow, colorGrowFix, colorFixGrow, colorFixFix
+
+
+# 画像パネル
+
+@docs imageContain, imageCover
+
+
+# テキストパネル
+
+@docs text
+
+
+# 固定サイズパネル
+
+@docs boxFixFix
+
+
+# 奥行きリストパネル
+
+@docs depthList
+
+
+# 縦並びリストパネル
+
+@docs VerticalListItem, verticalListGrowGrow, verticalListGrowFix, verticalListFixGrow, verticalListFixFix
+
+
+# 横並びリストパネル
+
+@docs HorizontalListItem, horizontalListGrowGrow, horizontalListGrowFix, horizontalListFixGrow, horizontalListFixFix
+
+-}
 
 import Color exposing (Color)
 import NSvg exposing (Svg)
 import Palette.X11 as X
 import Panel
+
+
+
+{-
+   =========================================
+               固定サイズパネル
+   =========================================
+-}
+
+{-|
+    GrowGrowパネルを固定サイズにする
+-}
+boxFixFix : { width : Int, height : Int } -> Panel.GrowGrow msg -> Panel.FixFix msg
+boxFixFix { width, height } growGrow =
+    Panel.fixFixCustomize
+        { width = width
+        , height = height
+        , nSvgElementList =
+            Panel.growGrowToNSvgElementList growGrow { width = width, height = height }
+        }
 
 
 
@@ -58,9 +99,9 @@ colorGrowGrow color =
 
 {-| 単色で高さが固定で横に伸びる
 -}
-colorGrowFix : { height : Int } -> Color -> Panel.GrowFit msg
+colorGrowFix : { height : Int } -> Color -> Panel.GrowFix msg
 colorGrowFix { height } color =
-    Panel.growFitCustomize
+    Panel.growFixCustomize
         { minWidth = 0
         , height = height
         , nSvgElementList =
@@ -75,9 +116,9 @@ colorGrowFix { height } color =
 
 {-| 単色で幅が固定で縦に伸びる
 -}
-colorFixGrow : { width : Int } -> Color -> Panel.FitGrow msg
+colorFixGrow : { width : Int } -> Color -> Panel.FixGrow msg
 colorFixGrow { width } color =
-    Panel.fitGrowCustomize
+    Panel.fixGrowCustomize
         { width = width
         , minHeight = 0
         , nSvgElementList =
@@ -92,9 +133,9 @@ colorFixGrow { width } color =
 
 {-| 単色で固定サイズの要素
 -}
-colorFixFix : { width : Int, height : Int } -> Color -> Panel.FitFit msg
+colorFixFix : { width : Int, height : Int } -> Color -> Panel.FixFix msg
 colorFixFix { width, height } color =
-    Panel.fitFitCustomize
+    Panel.fixFixCustomize
         { width = width
         , height = height
         , nSvgElementList =
@@ -111,8 +152,8 @@ colorFixFix { width, height } color =
    =========================================
                    画像パネル
     本当は、幅、高さのどちらかを取得して画像データから残りの幅、高さを算出できるようする
-    keepAspectImagePanelFromWidth : {width : Int} -> Image -> PanelFitFit msg
-    keepAspectImagePanelFromHeight : {height: Int} -> Image -> PanelFitFit msg
+    keepAspectImagePanelFromWidth : {width : Int} -> Image -> PanelFixFix msg
+    keepAspectImagePanelFromHeight : {height: Int} -> Image -> PanelFixFix msg
     を作りたかった
     Elmでは無理なのでDefinyで挑戦したい
    =========================================
@@ -125,9 +166,9 @@ colorFixFix { width, height } color =
     画像を{width,height}で指定した比率に合うようにレターボックス(透明の帯)を上下、左右の足りない方に追加する
 
 -}
-imageContain : { width : Int, height : Int } -> String -> Panel.FitFit msg
+imageContain : { width : Int, height : Int } -> String -> Panel.FixFix msg
 imageContain { width, height } source =
-    Panel.fitFitCustomize
+    Panel.fixFixCustomize
         { width = width
         , height = height
         , nSvgElementList =
@@ -143,9 +184,9 @@ imageContain { width, height } source =
     画像を{width,height}で指定した比率に合うように飛び出たところを消す
 
 -}
-imageCover : { width : Int, height : Int } -> String -> Panel.FitFit msg
+imageCover : { width : Int, height : Int } -> String -> Panel.FixFix msg
 imageCover { width, height } source =
-    Panel.fitFitCustomize
+    Panel.fixFixCustomize
         { width = width
         , height = height
         , nSvgElementList =
@@ -163,9 +204,9 @@ imageCover { width, height } source =
 -}
 
 
-text : { width : Int, height : Int } -> String -> Panel.FitFit msg
+text : { width : Int, height : Int } -> String -> Panel.FixFix msg
 text { width, height } string =
-    Panel.fitFitCustomize
+    Panel.fixFixCustomize
         { width = width
         , height = height
         , nSvgElementList =
@@ -184,28 +225,28 @@ text { width, height } string =
 
 {-| 縦並び分割、幅と高さは中身に合わせる
 -}
-verticalListFitFit : List (Panel.GrowFit msg) -> Panel.FitFit msg
-verticalListFitFit list =
+verticalListFixFix : List (Panel.GrowFix msg) -> Panel.FixFix msg
+verticalListFixFix list =
     let
         width =
             list
-                |> List.map Panel.growFitGetMinWidth
+                |> List.map Panel.growFixGetMinWidth
                 |> List.maximum
                 |> Maybe.withDefault 0
     in
-    Panel.fitFitCustomize
+    Panel.fixFixCustomize
         { width = width
         , height =
             list
-                |> List.map Panel.growFitGetHeight
+                |> List.map Panel.growFixGetHeight
                 |> List.sum
         , nSvgElementList =
             list
                 |> List.foldl
-                    (\growFitPanel ( offsetY, elementList ) ->
-                        ( offsetY + Panel.growFitGetHeight growFitPanel
+                    (\growFixPanel ( offsetY, elementList ) ->
+                        ( offsetY + Panel.growFixGetHeight growFixPanel
                         , elementList
-                            ++ (Panel.growFitToNSvgElementList growFitPanel { width = width }
+                            ++ (Panel.growFixToNSvgElementList growFixPanel { width = width }
                                     |> List.map
                                         (NSvg.translate
                                             { x = 0
@@ -222,26 +263,26 @@ verticalListFitFit list =
 
 {-| 縦並び分割、幅は外に合わせて伸びる
 -}
-verticalListGrowFit : List (Panel.GrowFit msg) -> Panel.GrowFit msg
-verticalListGrowFit list =
-    Panel.growFitCustomize
+verticalListGrowFix : List (Panel.GrowFix msg) -> Panel.GrowFix msg
+verticalListGrowFix list =
+    Panel.growFixCustomize
         { height =
             list
-                |> List.map Panel.growFitGetHeight
+                |> List.map Panel.growFixGetHeight
                 |> List.sum
         , minWidth =
             list
-                |> List.map Panel.growFitGetMinWidth
+                |> List.map Panel.growFixGetMinWidth
                 |> List.maximum
                 |> Maybe.withDefault 0
         , nSvgElementList =
             \{ width } ->
                 list
                     |> List.foldl
-                        (\growFitPanel ( offsetY, elementList ) ->
-                            ( offsetY + Panel.growFitGetHeight growFitPanel
+                        (\growFixPanel ( offsetY, elementList ) ->
+                            ( offsetY + Panel.growFixGetHeight growFixPanel
                             , elementList
-                                ++ (Panel.growFitToNSvgElementList growFitPanel { width = width }
+                                ++ (Panel.growFixToNSvgElementList growFixPanel { width = width }
                                         |> List.map
                                             (NSvg.translate
                                                 { x = 0
@@ -257,14 +298,14 @@ verticalListGrowFit list =
 
 
 type VerticalListItem msg
-    = VerticalDivideItemFit (Panel.GrowFit msg)
+    = VerticalDivideItemFix (Panel.GrowFix msg)
     | VerticalDivideItemGrow Int (Panel.GrowGrow msg)
 
 
 {-| 縦並び分割、幅は中身に合わせて、高さは外に合わせて伸びる
 -}
-verticalListFitGrow : List (VerticalListItem msg) -> Panel.FitGrow msg
-verticalListFitGrow list =
+verticalListFixGrow : List (VerticalListItem msg) -> Panel.FixGrow msg
+verticalListFixGrow list =
     let
         weightSum =
             verticalListWeightSum list
@@ -272,7 +313,7 @@ verticalListFitGrow list =
         width =
             verticalListMinWidth list
     in
-    Panel.fitGrowCustomize
+    Panel.fixGrowCustomize
         { width = width
         , minHeight = verticalListMinHeight list
         , nSvgElementList =
@@ -285,10 +326,10 @@ verticalListFitGrow list =
                     |> List.foldl
                         (\item ( offsetY, elementList ) ->
                             case item of
-                                VerticalDivideItemFit growFitPanel ->
-                                    ( offsetY + Panel.growFitGetHeight growFitPanel
+                                VerticalDivideItemFix growFixPanel ->
+                                    ( offsetY + Panel.growFixGetHeight growFixPanel
                                     , elementList
-                                        ++ (Panel.growFitToNSvgElementList growFitPanel { width = width }
+                                        ++ (Panel.growFixToNSvgElementList growFixPanel { width = width }
                                                 |> List.map
                                                     (NSvg.translate
                                                         { x = 0
@@ -340,11 +381,11 @@ verticalListGrowGrow list =
                     |> List.foldl
                         (\item ( offsetY, elementList ) ->
                             case item of
-                                VerticalDivideItemFit growFitPanel ->
-                                    ( offsetY + Panel.growFitGetHeight growFitPanel
+                                VerticalDivideItemFix growFixPanel ->
+                                    ( offsetY + Panel.growFixGetHeight growFixPanel
                                     , elementList
-                                        ++ (Panel.growFitToNSvgElementList
-                                                growFitPanel
+                                        ++ (Panel.growFixToNSvgElementList
+                                                growFixPanel
                                                 { width = width }
                                                 |> List.map
                                                     (NSvg.translate
@@ -385,8 +426,8 @@ verticalListMinHeight =
     List.map
         (\item ->
             case item of
-                VerticalDivideItemFit growFitPanel ->
-                    Panel.growFitGetHeight growFitPanel
+                VerticalDivideItemFix growFixPanel ->
+                    Panel.growFixGetHeight growFixPanel
 
                 VerticalDivideItemGrow _ growGrowPanel ->
                     Panel.growGrowGetMinHeight growGrowPanel
@@ -401,8 +442,8 @@ verticalListMinWidth =
     List.map
         (\item ->
             case item of
-                VerticalDivideItemFit growFitPanel ->
-                    Panel.growFitGetMinWidth growFitPanel
+                VerticalDivideItemFix growFixPanel ->
+                    Panel.growFixGetMinWidth growFixPanel
 
                 VerticalDivideItemGrow _ growGrowPanel ->
                     Panel.growGrowGetMinWidth growGrowPanel
@@ -420,8 +461,8 @@ verticalListRest height list =
             |> List.filterMap
                 (\item ->
                     case item of
-                        VerticalDivideItemFit growFitPanel ->
-                            Just (Panel.growFitGetHeight growFitPanel)
+                        VerticalDivideItemFix growFixPanel ->
+                            Just (Panel.growFixGetHeight growFixPanel)
 
                         VerticalDivideItemGrow _ _ ->
                             Nothing
@@ -437,7 +478,7 @@ verticalListWeightSum =
     List.filterMap
         (\item ->
             case item of
-                VerticalDivideItemFit _ ->
+                VerticalDivideItemFix _ ->
                     Nothing
 
                 VerticalDivideItemGrow weight _ ->
@@ -457,30 +498,30 @@ verticalListWeightSum =
 
 {-| 横並びリスト。幅高さは中身に合わせる
 -}
-horizontalListFitFit : List (Panel.FitGrow msg) -> Panel.FitFit msg
-horizontalListFitFit list =
+horizontalListFixFix : List (Panel.FixGrow msg) -> Panel.FixFix msg
+horizontalListFixFix list =
     let
         height =
             list
-                |> List.map Panel.fitGrowGetMinHeight
+                |> List.map Panel.fixGrowGetMinHeight
                 |> List.maximum
                 |> Maybe.withDefault 0
     in
-    Panel.fitFitCustomize
+    Panel.fixFixCustomize
         { width =
             list
-                |> List.map Panel.fitGrowGetWidth
+                |> List.map Panel.fixGrowGetWidth
                 |> List.sum
         , height =
             height
         , nSvgElementList =
             list
                 |> List.foldl
-                    (\fitGrowPanel ( offsetX, elementList ) ->
-                        ( offsetX + Panel.fitGrowGetWidth fitGrowPanel
+                    (\fixGrowPanel ( offsetX, elementList ) ->
+                        ( offsetX + Panel.fixGrowGetWidth fixGrowPanel
                         , elementList
-                            ++ (Panel.fitGrowToNSvgElementList
-                                    fitGrowPanel
+                            ++ (Panel.fixGrowToNSvgElementList
+                                    fixGrowPanel
                                     { height = height }
                                     |> List.map
                                         (NSvg.translate
@@ -498,25 +539,25 @@ horizontalListFitFit list =
 
 {-| 横並びリスト。高さは外に合わせて伸びる。幅は中身に合わせる
 -}
-horizontalListFitGrow : List (Panel.FitGrow msg) -> Panel.FitGrow msg
-horizontalListFitGrow list =
-    Panel.fitGrowCustomize
+horizontalListFixGrow : List (Panel.FixGrow msg) -> Panel.FixGrow msg
+horizontalListFixGrow list =
+    Panel.fixGrowCustomize
         { width =
             list
-                |> List.map Panel.fitGrowGetWidth
+                |> List.map Panel.fixGrowGetWidth
                 |> List.sum
         , minHeight =
             list
-                |> List.map Panel.fitGrowGetMinHeight
+                |> List.map Panel.fixGrowGetMinHeight
                 |> List.maximum
                 |> Maybe.withDefault 0
         , nSvgElementList =
             \{ height } ->
                 list
                     |> List.foldl
-                        (\fitGrowPanel ( offsetX, elementList ) ->
-                            ( offsetX + Panel.fitGrowGetWidth fitGrowPanel
-                            , Panel.fitGrowToNSvgElementList fitGrowPanel { height = height }
+                        (\fixGrowPanel ( offsetX, elementList ) ->
+                            ( offsetX + Panel.fixGrowGetWidth fixGrowPanel
+                            , Panel.fixGrowToNSvgElementList fixGrowPanel { height = height }
                                 |> List.map
                                     (NSvg.translate
                                         { x = offsetX
@@ -531,19 +572,19 @@ horizontalListFitGrow list =
 
 
 type HorizontalListItem msg
-    = HorizontalListItemFit (Panel.FitGrow msg)
+    = HorizontalListItemFix (Panel.FixGrow msg)
     | HorizontalListItemGrow Int (Panel.GrowGrow msg)
 
 
 {-| 横並びリスト。幅は外に合わせて伸びる。高さは中身に合わせる
 -}
-horizontalListGrowFit : List (HorizontalListItem msg) -> Panel.GrowFit msg
-horizontalListGrowFit list =
+horizontalListGrowFix : List (HorizontalListItem msg) -> Panel.GrowFix msg
+horizontalListGrowFix list =
     let
         height =
             horizontalListMinHeight list
     in
-    Panel.growFitCustomize
+    Panel.growFixCustomize
         { minWidth = horizontalListMinWidth list
         , height = height
         , nSvgElementList =
@@ -559,10 +600,10 @@ horizontalListGrowFit list =
                     |> List.foldl
                         (\item ( offsetX, elementList ) ->
                             case item of
-                                HorizontalListItemFit fitGrow ->
-                                    ( offsetX + Panel.fitGrowGetWidth fitGrow
+                                HorizontalListItemFix fixGrow ->
+                                    ( offsetX + Panel.fixGrowGetWidth fixGrow
                                     , elementList
-                                        ++ (Panel.fitGrowToNSvgElementList fitGrow { height = height }
+                                        ++ (Panel.fixGrowToNSvgElementList fixGrow { height = height }
                                                 |> List.map
                                                     (NSvg.translate
                                                         { x = offsetX
@@ -610,10 +651,10 @@ horizontalListGrowGrow list =
                     |> List.foldl
                         (\item ( offsetX, elementList ) ->
                             case item of
-                                HorizontalListItemFit fitGrow ->
-                                    ( offsetX + Panel.fitGrowGetWidth fitGrow
+                                HorizontalListItemFix fixGrow ->
+                                    ( offsetX + Panel.fixGrowGetWidth fixGrow
                                     , elementList
-                                        ++ (Panel.fitGrowToNSvgElementList fitGrow { height = height }
+                                        ++ (Panel.fixGrowToNSvgElementList fixGrow { height = height }
                                                 |> List.map
                                                     (NSvg.translate
                                                         { x = offsetX
@@ -649,8 +690,8 @@ horizontalListMinWidth =
     List.map
         (\item ->
             case item of
-                HorizontalListItemFit fitGrow ->
-                    Panel.fitGrowGetWidth fitGrow
+                HorizontalListItemFix fixGrow ->
+                    Panel.fixGrowGetWidth fixGrow
 
                 HorizontalListItemGrow _ growGrow ->
                     Panel.growGrowGetMinWidth growGrow
@@ -665,8 +706,8 @@ horizontalListMinHeight =
     List.map
         (\item ->
             case item of
-                HorizontalListItemFit fitGrow ->
-                    Panel.fitGrowGetMinHeight fitGrow
+                HorizontalListItemFix fixGrow ->
+                    Panel.fixGrowGetMinHeight fixGrow
 
                 HorizontalListItemGrow _ growGrow ->
                     Panel.growGrowGetMinHeight growGrow
@@ -682,8 +723,8 @@ horizontalListRest width list =
             |> List.filterMap
                 (\item ->
                     case item of
-                        HorizontalListItemFit fitGrow ->
-                            Just (Panel.fitGrowGetWidth fitGrow)
+                        HorizontalListItemFix fixGrow ->
+                            Just (Panel.fixGrowGetWidth fixGrow)
 
                         HorizontalListItemGrow _ _ ->
                             Nothing
@@ -699,7 +740,7 @@ horizontalListWeightSum =
     List.filterMap
         (\item ->
             case item of
-                HorizontalListItemFit _ ->
+                HorizontalListItemFix _ ->
                     Nothing
 
                 HorizontalListItemGrow weight _ ->

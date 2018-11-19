@@ -1,64 +1,71 @@
 module Panel exposing
-    ( FitFit
-    , FitGrow
-    , GrowFit
-    , GrowGrow
-    , HorizontalAlignment
-    , VerticalAlignment
-    , bottom
-    , centerX
-    , centerY
-    , fitFitCustomize
-    , fitFitGetHeight
-    , fitFitGetWidth
-    , fitFitToNSvgElementList
-    , fitGrowCustomize
-    , fitGrowFromFitFit
-    , fitGrowGetMinHeight
-    , fitGrowGetWidth
-    , fitGrowToNSvgElementList
-    , growFitCustomize
-    , growFitFromFitFit
-    , growFitGetHeight
-    , growFitGetMinWidth
-    , growFitToNSvgElementList
-    , growGrowCustomize
-    , growGrowFromFitFit
-    , growGrowFromFitGrow
-    , growGrowFromGrowFit
-    , growGrowGetMinHeight
-    , growGrowGetMinWidth
-    , growGrowToNSvgElementList
-    , left
-    , right
-    , toSvg
-    , top
+    ( FixFix, fixFixCustomize, fixFixGetWidth, fixFixGetHeight, fixFixToNSvgElementList
+    , FixGrow, fixGrowCustomize, fixGrowFromFixFix, fixGrowGetWidth, fixGrowGetMinHeight, fixGrowToNSvgElementList
+    , GrowFix, growFixCustomize, growFixFromFixFix, growFixGetMinWidth, growFixGetHeight, growFixToNSvgElementList
+    , GrowGrow, growGrowCustomize, growGrowFromFixFix, growGrowFromFixGrow, growGrowFromGrowFix, growGrowGetMinWidth, growGrowGetMinHeight, growGrowToNSvgElementList
+    , HorizontalAlignment, left, centerX, right
+    , VerticalAlignment, top, centerY, bottom
+    , horizontalAlignmentToX, toSvg, verticalAlignmentToY
     )
 
-import NSvg exposing (Svg)
+{-| レイアウトの基本。パネルが定義されている
 
 
-{-| 幅と高さが中身によって決まるパネル
+# Fix Fix 幅と高さが固定サイズのパネル
+
+@docs FixFix, fixFixCustomize, fixFixGetWidth, fixFixGetHeight, fixFixToNSvgElementList
+
+
+# Fix Grow 幅が固定で、高さが外側に合わせて伸びるパネル
+
+@docs FixGrow, fixGrowCustomize, fixGrowFromFixFix, fixGrowGetWidth, fixGrowGetMinHeight, fixGrowToNSvgElementList
+
+
+# Grow Fix 幅が外側に合わせて伸びて、高さが固定のパネル
+
+@docs GrowFix, growFixCustomize, growFixFromFixFix, growFixGetMinWidth, growFixGetHeight, growFixToNSvgElementList
+
+
+# Grow Grow 幅と高さが外側に合わせて伸びるパネル
+
+@docs GrowGrow, growGrowCustomize, growGrowFromFixFix, growGrowFromFixGrow, growGrowFromGrowFix, growGrowGetMinWidth, growGrowGetMinHeight, growGrowToNSvgElementList
+
+
+# 横方向のそろえ方
+
+@docs HorizontalAlignment, left, centerX, right
+
+
+# 縦方向のそろえ方
+
+@docs VerticalAlignment, top, centerY, bottom
+
 -}
-type FitFit msg
-    = FitFit
+
+import NSvg
+
+
+{-| 幅と高さが固定のパネル
+-}
+type FixFix msg
+    = FixFix
         { width : Int
         , height : Int
         , nSvgElementList : List (NSvg.Element msg)
         }
 
 
-{-| 幅と高さが中身によって決まるパネルを作る
+{-| 幅と高さが中身によって決まるパネルを幅と高さと表示するSNvg.Elementから作る
 -}
-fitFitCustomize : { width : Int, height : Int, nSvgElementList : List (NSvg.Element msg) } -> FitFit msg
-fitFitCustomize =
-    FitFit
+fixFixCustomize : { width : Int, height : Int, nSvgElementList : List (NSvg.Element msg) } -> FixFix msg
+fixFixCustomize =
+    FixFix
 
 
 {-| 幅は中身によって、高さは外の大きさによって決まるパネル
 -}
-type FitGrow msg
-    = FitGrow
+type FixGrow msg
+    = FixGrow
         { width : Int
         , minHeight : Int
         , nSvgElementList : { height : Int } -> List (NSvg.Element msg)
@@ -67,30 +74,30 @@ type FitGrow msg
 
 {-| 幅は中身によって、高さは外の大きさによって決まるパネルを作る
 -}
-fitGrowCustomize :
+fixGrowCustomize :
     { width : Int, minHeight : Int, nSvgElementList : { height : Int } -> List (NSvg.Element msg) }
-    -> FitGrow msg
-fitGrowCustomize =
-    FitGrow
+    -> FixGrow msg
+fixGrowCustomize =
+    FixGrow
 
 
-{-| 縦方向の揃え方を指定してFitFitをFitGrowにする
+{-| 縦方向の揃え方を指定してFixFixをFixGrowにする
 -}
-fitGrowFromFitFit : VerticalAlignment -> FitFit msg -> FitGrow msg
-fitGrowFromFitFit verticalAlignment fitFit =
-    FitGrow
-        { width = fitFitGetWidth fitFit
-        , minHeight = fitFitGetHeight fitFit
+fixGrowFromFixFix : VerticalAlignment -> FixFix msg -> FixGrow msg
+fixGrowFromFixFix verticalAlignment fixFix =
+    FixGrow
+        { width = fixFixGetWidth fixFix
+        , minHeight = fixFixGetHeight fixFix
         , nSvgElementList =
             \{ height } ->
-                fitFitToNSvgElementList fitFit
+                fixFixToNSvgElementList fixFix
                     |> List.map
                         (NSvg.translate
                             { x = 0
                             , y =
                                 verticalAlignmentToY
                                     { areaHeight = height
-                                    , height = fitFitGetHeight fitFit
+                                    , height = fixFixGetHeight fixFix
                                     }
                                     verticalAlignment
                             }
@@ -100,8 +107,8 @@ fitGrowFromFitFit verticalAlignment fitFit =
 
 {-| 幅は外の大きさによって、高さは中身によって決まるパネル
 -}
-type GrowFit msg
-    = GrowFit
+type GrowFix msg
+    = GrowFix
         { minWidth : Int
         , height : Int
         , nSvgElementList : { width : Int } -> List (NSvg.Element msg)
@@ -110,29 +117,29 @@ type GrowFit msg
 
 {-| 幅は外の大きさによって、高さは中身によって決まるパネルをつくる
 -}
-growFitCustomize :
+growFixCustomize :
     { minWidth : Int, height : Int, nSvgElementList : { width : Int } -> List (NSvg.Element msg) }
-    -> GrowFit msg
-growFitCustomize =
-    GrowFit
+    -> GrowFix msg
+growFixCustomize =
+    GrowFix
 
 
-{-| 横方向の揃え方を指定してFiiFitをFitGrowにする
+{-| 横方向の揃え方を指定してFiiFixをFixGrowにする
 -}
-growFitFromFitFit : HorizontalAlignment -> FitFit msg -> GrowFit msg
-growFitFromFitFit horizontalAlignment fitFit =
-    GrowFit
-        { minWidth = fitFitGetWidth fitFit
-        , height = fitFitGetHeight fitFit
+growFixFromFixFix : HorizontalAlignment -> FixFix msg -> GrowFix msg
+growFixFromFixFix horizontalAlignment fixFix =
+    GrowFix
+        { minWidth = fixFixGetWidth fixFix
+        , height = fixFixGetHeight fixFix
         , nSvgElementList =
             \{ width } ->
-                fitFitToNSvgElementList fitFit
+                fixFixToNSvgElementList fixFix
                     |> List.map
                         (NSvg.translate
                             { x =
                                 horizontalAlignmentToX
                                     { areaWidth = width
-                                    , width = fitFitGetWidth fitFit
+                                    , width = fixFixGetWidth fixFix
                                     }
                                     horizontalAlignment
                             , y = 0
@@ -165,28 +172,28 @@ growGrowCustomize =
     GrowGrow
 
 
-{-| 横方向の揃え方と縦方向の揃え方を指定してFitFitをGrowGrowにする
+{-| 横方向の揃え方と縦方向の揃え方を指定してFixFixをGrowGrowにする
 -}
-growGrowFromFitFit : HorizontalAlignment -> VerticalAlignment -> FitFit msg -> GrowGrow msg
-growGrowFromFitFit horizontalAlignment verticalAlignment fitFit =
+growGrowFromFixFix : HorizontalAlignment -> VerticalAlignment -> FixFix msg -> GrowGrow msg
+growGrowFromFixFix horizontalAlignment verticalAlignment fixFix =
     GrowGrow
-        { minWidth = fitFitGetWidth fitFit
-        , minHeight = fitFitGetHeight fitFit
+        { minWidth = fixFixGetWidth fixFix
+        , minHeight = fixFixGetHeight fixFix
         , nSvgElementList =
             \{ width, height } ->
-                fitFitToNSvgElementList fitFit
+                fixFixToNSvgElementList fixFix
                     |> List.map
                         (NSvg.translate
                             { x =
                                 horizontalAlignmentToX
                                     { areaWidth = width
-                                    , width = fitFitGetWidth fitFit
+                                    , width = fixFixGetWidth fixFix
                                     }
                                     horizontalAlignment
                             , y =
                                 verticalAlignmentToY
                                     { areaHeight = height
-                                    , height = fitFitGetHeight fitFit
+                                    , height = fixFixGetHeight fixFix
                                     }
                                     verticalAlignment
                             }
@@ -194,22 +201,22 @@ growGrowFromFitFit horizontalAlignment verticalAlignment fitFit =
         }
 
 
-{-| 横方向の揃え方を指定してFitGrowをGrowGrowにする
+{-| 横方向の揃え方を指定してFixGrowをGrowGrowにする
 -}
-growGrowFromFitGrow : HorizontalAlignment -> FitGrow msg -> GrowGrow msg
-growGrowFromFitGrow horizontalAlignment fitGrow =
+growGrowFromFixGrow : HorizontalAlignment -> FixGrow msg -> GrowGrow msg
+growGrowFromFixGrow horizontalAlignment fixGrow =
     GrowGrow
-        { minWidth = fitGrowGetWidth fitGrow
-        , minHeight = fitGrowGetMinHeight fitGrow
+        { minWidth = fixGrowGetWidth fixGrow
+        , minHeight = fixGrowGetMinHeight fixGrow
         , nSvgElementList =
             \{ width, height } ->
-                fitGrowToNSvgElementList fitGrow { height = height }
+                fixGrowToNSvgElementList fixGrow { height = height }
                     |> List.map
                         (NSvg.translate
                             { x =
                                 horizontalAlignmentToX
                                     { areaWidth = width
-                                    , width = fitGrowGetWidth fitGrow
+                                    , width = fixGrowGetWidth fixGrow
                                     }
                                     horizontalAlignment
                             , y = 0
@@ -218,22 +225,22 @@ growGrowFromFitGrow horizontalAlignment fitGrow =
         }
 
 
-{-| 縦方向の揃え方を指定してGrowFitをGrowGrowにする
+{-| 縦方向の揃え方を指定してGrowFixをGrowGrowにする
 -}
-growGrowFromGrowFit : VerticalAlignment -> GrowFit msg -> GrowGrow msg
-growGrowFromGrowFit verticalAlignment growFit =
+growGrowFromGrowFix : VerticalAlignment -> GrowFix msg -> GrowGrow msg
+growGrowFromGrowFix verticalAlignment growFix =
     GrowGrow
-        { minWidth = growFitGetMinWidth growFit
-        , minHeight = growFitGetHeight growFit
+        { minWidth = growFixGetMinWidth growFix
+        , minHeight = growFixGetHeight growFix
         , nSvgElementList =
             \{ width, height } ->
-                growFitToNSvgElementList growFit { width = width }
+                growFixToNSvgElementList growFix { width = width }
                     |> List.map
                         (NSvg.translate
                             { x =
                                 verticalAlignmentToY
                                     { areaHeight = height
-                                    , height = growFitGetMinWidth growFit
+                                    , height = growFixGetMinWidth growFix
                                     }
                                     verticalAlignment
                             , y = 0
@@ -332,7 +339,7 @@ verticalAlignmentToY { areaHeight, height } verticalAlignment =
 
 {-| 幅と高さとElementを渡してSvgにする
 -}
-toSvg : { width : Int, height : Int } -> GrowGrow msg -> Svg msg
+toSvg : { width : Int, height : Int } -> GrowGrow msg -> NSvg.Svg msg
 toSvg { width, height } element =
     NSvg.toSvg
         { x = 0, y = 0, width = width, height = height }
@@ -346,66 +353,66 @@ growGrowToNSvgElementList (GrowGrow { nSvgElementList }) =
     nSvgElementList
 
 
-{-| FitGrowと高さを受け取り、NSvgElementのListを返す
+{-| FixGrowと高さを受け取り、NSvgElementのListを返す
 -}
-fitGrowToNSvgElementList : FitGrow msg -> { height : Int } -> List (NSvg.Element msg)
-fitGrowToNSvgElementList (FitGrow { nSvgElementList }) =
+fixGrowToNSvgElementList : FixGrow msg -> { height : Int } -> List (NSvg.Element msg)
+fixGrowToNSvgElementList (FixGrow { nSvgElementList }) =
     nSvgElementList
 
 
-{-| GrowFitと幅を受け取り、NSvgElementのListを返す
+{-| GrowFixと幅を受け取り、NSvgElementのListを返す
 -}
-growFitToNSvgElementList : GrowFit msg -> { width : Int } -> List (NSvg.Element msg)
-growFitToNSvgElementList (GrowFit { nSvgElementList }) =
+growFixToNSvgElementList : GrowFix msg -> { width : Int } -> List (NSvg.Element msg)
+growFixToNSvgElementList (GrowFix { nSvgElementList }) =
     nSvgElementList
 
 
-{-| FitFitと幅と高さを受け取り、NSvgElementのListを返す
+{-| FixFixと幅と高さを受け取り、NSvgElementのListを返す
 -}
-fitFitToNSvgElementList : FitFit msg -> List (NSvg.Element msg)
-fitFitToNSvgElementList (FitFit { nSvgElementList }) =
+fixFixToNSvgElementList : FixFix msg -> List (NSvg.Element msg)
+fixFixToNSvgElementList (FixFix { nSvgElementList }) =
     nSvgElementList
 
 
-{-| FitFitから幅を取得する
+{-| FixFixから幅を取得する
 -}
-fitFitGetWidth : FitFit msg -> Int
-fitFitGetWidth (FitFit { width }) =
+fixFixGetWidth : FixFix msg -> Int
+fixFixGetWidth (FixFix { width }) =
     width
 
 
-{-| FitFitから高さを取得する
+{-| FixFixから高さを取得する
 -}
-fitFitGetHeight : FitFit msg -> Int
-fitFitGetHeight (FitFit { height }) =
+fixFixGetHeight : FixFix msg -> Int
+fixFixGetHeight (FixFix { height }) =
     height
 
 
-{-| FitGrowから幅を取得する
+{-| FixGrowから幅を取得する
 -}
-fitGrowGetWidth : FitGrow msg -> Int
-fitGrowGetWidth (FitGrow { width }) =
+fixGrowGetWidth : FixGrow msg -> Int
+fixGrowGetWidth (FixGrow { width }) =
     width
 
 
-{-| FitGrowから最小の高さを取得する
+{-| FixGrowから最小の高さを取得する
 -}
-fitGrowGetMinHeight : FitGrow msg -> Int
-fitGrowGetMinHeight (FitGrow { minHeight }) =
+fixGrowGetMinHeight : FixGrow msg -> Int
+fixGrowGetMinHeight (FixGrow { minHeight }) =
     minHeight
 
 
-{-| GrowFitから高さを取得する
+{-| GrowFixから高さを取得する
 -}
-growFitGetHeight : GrowFit msg -> Int
-growFitGetHeight (GrowFit { height }) =
+growFixGetHeight : GrowFix msg -> Int
+growFixGetHeight (GrowFix { height }) =
     height
 
 
-{-| GrowFitから最小の幅を取得する
+{-| GrowFixから最小の幅を取得する
 -}
-growFitGetMinWidth : GrowFit msg -> Int
-growFitGetMinWidth (GrowFit { minWidth }) =
+growFixGetMinWidth : GrowFix msg -> Int
+growFixGetMinWidth (GrowFix { minWidth }) =
     minWidth
 
 

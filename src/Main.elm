@@ -50,64 +50,33 @@ view (Model { width, height }) =
     Panel.toSvg
         { width = width, height = height }
         (PanelSample.depthList
-            [ PanelSample.colorGrowGrow X.brown
-            , Panel.growGrowFromFitFit
+            [ Panel.growGrowFromFixFix
                 Panel.left
-                Panel.bottom
-                (PanelSample.colorFixFix { width = 60, height = 130 } X.skyBlue)
-            , Panel.growGrowFromGrowFit
                 Panel.top
-                (PanelSample.colorGrowFix { height = 20 } X.skyBlue)
-            , PanelSample.verticalListGrowGrow
-                [ PanelSample.VerticalDivideItemFit
-                    (Panel.growFitFromFitFit
-                        Panel.left
-                        smallImage
-                    )
-                , PanelSample.VerticalDivideItemFit
-                    (Panel.growFitFromFitFit
-                        Panel.centerX
-                        smallImage
-                    )
-                , PanelSample.VerticalDivideItemFit
-                    (Panel.growFitFromFitFit
-                        Panel.right
-                        smallImage
-                    )
-                , PanelSample.VerticalDivideItemFit
-                    (PanelSample.colorGrowFix { height = 10 } X.darkBlue)
-                , PanelSample.VerticalDivideItemGrow
-                    1
-                    (PanelSample.colorGrowGrow X.green)
-                , PanelSample.VerticalDivideItemFit
-                    (Panel.growFitFromFitFit
-                        Panel.centerX
-                        bigImage
-                    )
-                ]
-            , Panel.growGrowFromFitGrow
-                Panel.left
-                (PanelSample.horizontalListFitGrow
-                    [ Panel.fitGrowFromFitFit Panel.top bigImage
-                    , Panel.fitGrowFromFitFit Panel.bottom smallImage
+                (PanelSample.horizontalListFixFix
+                    [ Panel.fixGrowFromFixFix
+                        Panel.centerY
+                        (PanelSample.text { width = 32, height = 12 } "12345")
+                    , Panel.fixGrowFromFixFix
+                        Panel.centerY
+                        (PanelSample.text { width = 32, height = 12 } "+")
+                    , Panel.fixGrowFromFixFix
+                        Panel.centerY
+                        (PanelSample.text { width = 32, height = 12 } "abc")
                     ]
                 )
-            , Panel.growGrowFromFitFit
-                Panel.left
-                Panel.centerY
-                (PanelSample.text { width = 60, height = 130 } "Sample")
             ]
         )
 
 
-smallImage : Panel.FitFit msg
+smallImage : Panel.FixFix msg
 smallImage =
     PanelSample.imageCover
         { width = 32, height = 24 }
         imgSource
 
 
-bigImage : Panel.FitFit msg
+bigImage : Panel.FixFix msg
 bigImage =
     PanelSample.imageCover
         { width = 96, height = 72 }
