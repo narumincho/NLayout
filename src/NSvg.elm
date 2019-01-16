@@ -206,7 +206,7 @@ fillStyleToSvgAttributes : FillStyle -> List (S.Attribute msg)
 fillStyleToSvgAttributes fillStyle =
     case fillStyle of
         FillNone ->
-            []
+            [ Sa.fill "none" ] -- fillの初期値はblack
 
         FillWithColor { color } ->
             [ Sa.fill (Color.toRGBString color) ]
